@@ -1,0 +1,11 @@
+# Default ignored files
+/shelf/
+/workspace.xml
+*.swp
+*.xml
+*iml
+*.idea
+*.pyc
+Assignment/website/__pycache__/__init__.cpython-39.pyc
+Assignment/website/__pycache__/views.cpython-39.pyc
+Assignment/website/__pycache__/__init__.cpython-39.pyc
