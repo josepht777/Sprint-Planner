@@ -1,0 +1,53 @@
+{% extends "base.html" %} {% block title %}Select Tasks{% endblock %}
+
+{% block content%}
+<br>
+<h4 style="text-align:center">Select tasks to add to Sprint</h4>
+<br>
+<form method="post">
+<div class="container">
+    <div class="row">
+      <div class="col-12">
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th scope="col" style="text-align:center">Select Task</th>
+              <th scope="col" style="text-align:center">Name</th>
+              <th scope="col" style="text-align:center">Type</th>
+              <th scope="col" style="text-align:center">Status</th>
+              <th scope="col" style="text-align:center">Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for task in tasks %}
+            {% if (task.is_added == False) or (task in this_sprint.tasks) %}
+            <tr>
+              <td>
+                <div class="col text-center">
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" name="checklist"value = "{{ task.id }}" id="check{{ task.id }}" {% for added_task in this_sprint.tasks %} {% if task == added_task %} checked {% endif %} {% endfor %}>
+                        <label class="custom-control-label" for="check{{ task.id }}"></label>
+                    </div>
+                </div>
+              </td>
+              <td style="text-align:center">{{ task.name }}</td>
+              <td style="text-align:center">{{ task.type }}</td>
+              <td style="text-align:center">{{ task.status }}</td>
+              <td style="text-align:center">{{ task.description }}</td>
+            </tr>
+            {% endif %}
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="col text-center">
+    <button type="submit" class="btn btn-primary">Save Selection</button>
+    <button type="button" class="btn btn-secondary" onclick="location.href = '/sprints';">Cancel</button>
+  </div>
+  <br>
+</form>
+
+
+{% endblock %}

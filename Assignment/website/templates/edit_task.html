@@ -1,0 +1,93 @@
+{% extends "base.html" %} {% block title %}Edit Task{% endblock %}
+<!-- Name, type of task, story points value, tag, priority, assignee, task description, task status -->
+<!-- line 12 {{task.name}} -->
+{% block content%}
+<br/>
+<form method="POST">
+    <h3 align="center">Edit a Task</h3>
+    <div class="form-group">
+      <label for="name">Name of Task</label>
+      <input
+        type="text"
+        value = "{{ task.name }}"
+        class="form-control"
+        id="name"
+        name="name"
+        placeholder="Enter name of task"
+        required
+      />
+    </div>
+    <div class="form-group">
+      <label for="type">Type of Task</label>
+      <input
+        type="text"
+        class="form-control"
+        value = "{{ task.type }}"
+        id="type"
+        name="type"
+        placeholder="Enter the type of task"
+        required
+      />
+    </div>
+    <div class="form-group">
+      <label for="storyPoint">Story Point Value</label>
+      <input
+        type="text"
+        class="form-control"
+        value = "{{ task.storyPoint }}"
+        id="storyPoint"
+        name="storyPoint"
+        placeholder="Enter story point value"
+        required
+      />
+    </div>
+    <div class="form-group">
+      <label for="tag">Select Tag</label>
+      <select class="form-control" name = "tag" id="tag">
+        <option value = "Backend" {% if 'Backend' == task.tag %} selected {% endif %}>Backend</option>
+        <option value = "Frontend" {% if 'Frontend' == task.tag %} selected {% endif %}>Frontend</option>
+        <option value = "UI" {% if 'UI' == task.tag %} selected {% endif %}>UI</option>
+        <option value = "Database" {% if 'Database' == task.tag %} selected {% endif %}>Database</option>
+        <option value = "Testing" {% if 'Testing' == task.tag %} selected {% endif %}>Testing</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="priority">Select Priority</label>
+      <select class="form-control" name = "priority" id="priority">
+        <option value = "Very-High"{% if "Very-High" == task.priority %} selected {% endif %}>Very High</option>
+        <option value = "High" {% if 'High' == task.priority %} selected {% endif %}>High</option>
+        <option value = "Medium" {% if 'Medium' == task.priority %} selected {% endif %}>Medium</option>
+        <option value = "Low" {% if 'Low' == task.priority %} selected {% endif %}>Low</option>
+        <option value = "Very-Low" {% if "Very-Low" == task.priority %} selected {% endif %}>Very Low</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="status">Select Status</label>
+      <select class="form-control" name = "status" id="status">
+        <option value = "Not Started" {% if "Not Started" == task.status %} selected {% endif %}>Not Started</option>
+        <option value = "On Going" {% if "On Going" == task.status %} selected {% endif %}>On Going</option>
+        <option value = "Completed" {% if "Completed" == task.status %} selected {% endif %}>Completed</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="assignee">Select Assignee</label>
+      <select class="form-control" name = assignee id="assignee">
+        {% if users %}
+        {% for user in users %}
+        <option value = "{{ user.firstName }} {{ user.lastName }}">{{ user.firstName }} {{ user.lastName }}</option>
+        {% endfor %}
+        {% else %}
+        <option value = "No users available">No users available</option>
+        {% endif %}
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="description">Task Description</label>
+      <textarea class="form-control" name = "description" id="description" rows="3">{{task.description}}</textarea>
+    </div>
+    <br />
+    <button type="button" class="btn btn-secondary" onclick="history.back()">Discard Changes</button>
+    <button type="submit" class="btn btn-primary">Save Changes</button>
+  </form>
+  
+{% endblock %}

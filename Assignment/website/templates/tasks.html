@@ -1,0 +1,100 @@
+{% extends "base.html" %} {% block title %}Tasks{% endblock %}
+
+{% block content%}
+
+<br/>
+
+<a href = "create-task" type="button" class="btn btn-secondary btn-lg btn-block">Create a new Task</a>
+<br/>
+
+  <form method="POST">
+      <div class="form-group">
+        <label for="tag">Filter By</label>
+        <select class="form-control" name = "tag" id="tag">
+          <option value = "None">None</option>
+          {% if tasks|length != 0 %}
+          <option value = "Backend" {% if "Backend" == tasks[0].tag %} selected {% endif %}>Backend</option>
+          <option value = "Frontend" {% if "Frontend" == tasks[0].tag %} selected {% endif %}>Frontend</option>
+          <option value = "UI" {% if "UI" == tasks[0].tag %} selected {% endif %}>UI</option>
+          <option value = "Database" {% if "Database" == tasks[0].tag %} selected {% endif %}>Database</option>
+          <option value = "Testing" {% if "Testing" == tasks[0].tag %} selected {% endif %}>Testing</option>
+          {% else %}
+          <option value = "Backend">Backend</option>
+          <option value = "Frontend">Frontend</option>
+          <option value = "UI">UI</option>
+          <option value = "Database">Database</option>
+          <option value = "Testing">Testing</option>
+          {% endif %}
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="sort">Sort By</label>
+        <select class="form-control" name = "sort" id="sort">
+          <option value = "None">None</option>
+          <option value = "Name" >Name</option>
+          <option value = "Status" >Status</option>
+        </select>
+      </div>
+
+      <button type="submit" class="btn btn-secondary">Apply</button>
+      <a href = '/tasks' type="button" class="btn btn-secondary">Remove Selection</a>
+  </form>
+  <br/>
+
+
+
+
+
+<div class="container text-center">
+    <div class="row">
+      {% for task in tasks %}
+        <div class="col-sm-4 mb-4" margin-bottom: 10px >
+          <div class="card">
+              <div class="card-body">
+                <h5 class="card-title"> {{ task.name }} </h5>
+                <h6 class="card-subtitle mb-2 text-muted"><strong>Priority: </strong>{{ task.priority }}</h6>
+                <p class="card-text"><strong>Story Points: </strong>{{ task.storyPoint }}<br><strong>Tag: </strong>{{ task.tag }}</p>
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal{{task.id}}" class="bi bi-arrow-repeat">
+                  Flip Card 
+                </button>
+               
+                <!-- Button trigger modal -->
+              </div>
+              <div class="modal fade" id="myModal{{task.id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLongTitle">{{task.name}}</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                        <strong>Type of task: </strong>{{task.type}}<br>
+                        <strong>Story Point Value: </strong>{{ task.storyPoint }}<br>
+                        <strong>Tag: </strong>{{ task.tag }}<br>
+                        <strong>Priority: </strong>{{ task.priority }}<br>
+                        <strong>Assignee: </strong>{{ task.assignee }}<br>
+                        <strong>Task Status: </strong>{{ task.status }}<br>
+                        <strong>Description: </strong>{{task.description}}
+                    </div>
+                    <div class="modal-footer">
+                      <a href = 'delete_task/{{ task.id }}' type="button" class="btn btn-secondary">Delete Task</a>
+                      <a href = 'edit_task/{{ task.id }}' type="button" class="btn btn-primary">Edit Task</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+          </div>
+        </div>
+        {% endfor %}
+    </div>
+  </div>
+  
+
+
+
+
+
+{% endblock %}

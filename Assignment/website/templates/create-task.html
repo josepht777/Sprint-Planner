@@ -1,0 +1,89 @@
+{% extends "base.html" %} {% block title %}Create Task{% endblock %}
+<!-- Name, type of task, story points value, tag, priority, assignee, task description, task status -->
+{% block content%}
+<br/>
+<form method="POST">
+    <h3 align="center">Create a new Task</h3>
+    <div class="form-group">
+      <label for="name">Name of Task</label>
+      <input
+        type="text"
+        class="form-control"
+        id="name"
+        name="name"
+        placeholder="Enter name of task"
+        required
+      />
+    </div>
+    <div class="form-group">
+      <label for="type">Type of Task</label>
+      <input
+        type="text"
+        class="form-control"
+        id="type"
+        name="type"
+        placeholder="Enter the type of task"
+        required
+      />
+    </div>
+    <div class="form-group">
+      <label for="storyPoint">Story Point Value</label>
+      <input
+        type="text"
+        class="form-control"
+        id="storyPoint"
+        name="storyPoint"
+        placeholder="Enter story point value"
+        required
+      />
+    </div>
+    <div class="form-group">
+      <label for="tag">Select Tag</label>
+      <select class="form-control" name = "tag" id="tag">
+        <option value = "Backend">Backend</option>
+        <option value = "Frontend">Frontend</option>
+        <option value = "UI">UI</option>
+        <option value = "Database">Database</option>
+        <option value = "Testing">Testing</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="priority">Select Priority</label>
+      <select class="form-control" name = "priority" id="priority">
+        <option value = "Very-High">Very High</option>
+        <option value = "High">High</option>
+        <option value = "Medium">Medium</option>
+        <option value = "Low">Low</option>
+        <option value = "Very-Low">Very Low</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="status">Select Status</label>
+      <select class="form-control" name = status id="status">
+        <option value = "Not Started">Not Started</option>
+        <option value = "On Going">On Going</option>
+        <option value = "Completed">Completed</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="assignee">Select Assignee</label>
+      <select class="form-control" name = assignee id="assignee">
+        {% if users %}
+        {% for user in users %}
+        <option value = "{{ user.firstName }} {{ user.lastName }}">{{ user.firstName }} {{ user.lastName }}</option>
+        {% endfor %}
+        {% else %}
+        <option value = "No users available">No users available</option>
+        {% endif %}
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="description">Task Description</label>
+      <textarea class="form-control" name = "description" id="description" placeholder = "Enter the task description" rows="3"></textarea>
+    </div>
+    <br />
+    <button type="button" class="btn btn-secondary" onclick="history.back()">Cancel</button>
+    <button type="submit" class="btn btn-primary">Create Task</button>
+  </form>
+  
+{% endblock %}

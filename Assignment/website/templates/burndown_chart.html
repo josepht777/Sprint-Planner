@@ -1,0 +1,41 @@
+{% extends "base.html" %} 
+
+{% block title %}Burndown Chart
+{% endblock %}
+
+{% block content%}
+<style>
+    h1 {text-align: center;}
+    </style>
+<h1>{{this_sprint.name}} Burndown</h1>
+<canvas id="lineChart" width = "900" height="400"></canvas>
+<script>
+    var ctx = document.getElementById("lineChart").getContext("2d");
+    var lineChart = new Chart(ctx, {
+    type: "line",
+    data:{
+        labels: {{ labels | safe }},
+        datasets: [
+            {
+                label: "Sprint Progress",
+                data: {{ values | safe }},
+                fill: false,
+                borderColor: "rgb(196, 165, 25)",
+                lineTension: 0
+            },
+            {
+                label: "Estimated Ideal velocity",
+                data: {{ values2 | safe }},
+                fill: false,
+                borderColor: "rgb(159, 232, 232)",
+                lineTension: 0
+            }
+        ]
+    },
+});
+
+</script>
+
+{% endblock %}
+
+

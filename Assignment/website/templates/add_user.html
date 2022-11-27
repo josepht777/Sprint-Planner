@@ -1,0 +1,52 @@
+{% extends "base.html" %} {% block title %}Add User{% endblock %}
+<!-- firstName, lastName, email, group -->
+<head>
+  <title>Font Awesome Icons</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+{% block content%}
+<br/>
+<form method="POST">
+    <h3 align="center">Add a new User</h3>
+    <div class="form-group">
+      <label for="firstName">First Name of User</label><span style="color:red">* </span>
+      <input
+        type="text"
+        class="form-control"
+        id="firstName"
+        name="firstName"
+        placeholder="Enter the first name of user"
+        required="required"
+      />
+    </div>
+    <div class="form-group">
+        <label for="lastName">Last Name of User</label><span style="color:red">* </span>
+        <input
+          type="text"
+          class="form-control"
+          id="lastName"
+          name="lastName"
+          placeholder="Enter the last name of user"
+          required="required"
+        />
+      </div>
+    <div class="form-group">
+      <label for="email">Email of User</label><span style="color:red">* </span>
+      <input
+        type="email"
+        class="form-control"
+        id="email"
+        name="email"
+        placeholder="Enter the email of user"
+        required="required"
+      />
+    </div>
+    <br />
+    <button type="button" class="btn btn-secondary" style="font-size:24px" onclick="history.back()">
+      Cancel <i class="fa fa-times"></i> </button>
+    <button type="submit" class="btn btn-primary" style="font-size:24px">
+      Add User <i class="fa fa-check"></i> </button>
+  </form>
+  
+{% endblock %}

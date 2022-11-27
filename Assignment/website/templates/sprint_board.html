@@ -1,0 +1,164 @@
+{% extends "base.html" %} {% block title %}Select Tasks{% endblock %}
+{% block content%}
+
+
+<div class="container">
+    <div class="row">
+      <div style="text-align:center" class="col">
+        <br>
+        YET TO BE COMPLETED
+        
+        {% for task in sprint.tasks %}
+        {% if 'Not Started' == task.status %}
+
+
+                        <div class="container text-center d-flex justify-content-center">
+                            <div class="row">  
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h5 class="card-title"> {{ task.name }} </h5>
+                                        <h6 class="card-subtitle mb-2 text-muted"><strong>Priority: </strong>{{ task.priority }}</h6>
+                                        <p class="card-text"><strong>Story Points: </strong>{{ task.storyPoint }}<br><strong>Tag: </strong>{{ task.tag }}</p>
+                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal{{task.id}}">
+                                            More Info
+                                        </button>
+                                    </div>
+                                    
+                                    <div class="modal fade" id="myModal{{task.id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLongTitle">{{task.name}}</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <strong>Type of task: </strong>{{task.type}}<br>
+                                                <strong>ID of task: </strong>{{task.id}}<br>
+                                                <strong>Story Point Value: </strong>{{ task.storyPoint }}<br>
+                                                <strong>Tag: </strong>{{ task.tag }}<br>
+                                                <strong>Priority: </strong>{{ task.priority }}<br>
+                                                <strong>Assignee: </strong>{{ task.assignee }}<br>
+                                                <strong>Task Status: </strong>{{ task.status }}<br>
+                                                <strong>Description: </strong>{{task.description}}
+                                            </div>
+                                            <div class="modal-footer">
+                                            <a href = '/progress_task/{{ sprint.id }}/{{ task.id }}' type="button" class="btn btn-secondary">Progress Task</a>
+                                            </div>
+                                        </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+
+
+        {% endif %}
+        {% endfor %}
+      </div>
+      <div style="text-align:center" class="col">
+        <br>
+        IN PROGRESS  
+        {% for task in sprint.tasks %}
+        {% if 'On Going' == task.status %}
+            <div class="container text-center d-flex justify-content-center">
+                <div class="row">  
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title"> {{ task.name }} </h5>
+                            <h6 class="card-subtitle mb-2 text-muted"><strong>Priority: </strong>{{ task.priority }}</h6>
+                            <p class="card-text"><strong>Story Points: </strong>{{ task.storyPoint }}<br><strong>Tag: </strong>{{ task.tag }}</p>
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal{{task.id}}">
+                                More Info
+                            </button>
+                        </div>
+                        
+                        <div class="modal fade" id="myModal{{task.id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLongTitle">{{task.name}}</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                                </div>
+                                <div class="modal-body">
+                                    <strong>Type of task: </strong>{{task.type}}<br>
+                                    <strong>ID of task: </strong>{{task.id}}<br>
+                                    <strong>Story Point Value: </strong>{{ task.storyPoint }}<br>
+                                    <strong>Tag: </strong>{{ task.tag }}<br>
+                                    <strong>Priority: </strong>{{ task.priority }}<br>
+                                    <strong>Assignee: </strong>{{ task.assignee }}<br>
+                                    <strong>Task Status: </strong>{{ task.status }}<br>
+                                    <strong>Description: </strong>{{task.description}}
+                                </div>
+                                <div class="modal-footer">
+                                <a href = '/progress_task/{{ sprint.id }}/{{ task.id }}' type="button" class="btn btn-secondary">Progress Task</a>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br>
+        {% endif %}
+        {% endfor %}
+      </div>
+      <div style="text-align:center" class="col">
+        <br>
+        COMPLETED
+        {% for task in sprint.tasks %}
+        {% if 'Completed' == task.status %}
+            <div class="container text-center d-flex justify-content-center">
+                <div class="row">  
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title"> {{ task.name }} </h5>
+                            <h6 class="card-subtitle mb-2 text-muted"><strong>Priority: </strong>{{ task.priority }}</h6>
+                            <p class="card-text"><strong>Story Points: </strong>{{ task.storyPoint }}<br><strong>Tag: </strong>{{ task.tag }}</p>
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal{{task.id}}">
+                                More Info
+                            </button>
+                        </div>
+                        
+                        <div class="modal fade" id="myModal{{task.id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLongTitle">{{task.name}}</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                                </div>
+                                <div class="modal-body">
+                                    <strong>Type of task: </strong>{{task.type}}<br>
+                                    <strong>ID of task: </strong>{{task.id}}<br>
+                                    <strong>Story Point Value: </strong>{{ task.storyPoint }}<br>
+                                    <strong>Tag: </strong>{{ task.tag }}<br>
+                                    <strong>Priority: </strong>{{ task.priority }}<br>
+                                    <strong>Assignee: </strong>{{ task.assignee }}<br>
+                                    <strong>Task Status: </strong>{{ task.status }}<br>
+                                    <strong>Description: </strong>{{task.description}}
+                                </div>
+                                <div class="modal-footer">
+                                <a href = '/progress_task/{{ sprint.id }}/{{ task.id }}' type="button" class="btn btn-secondary">Progress Task</a>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br>
+        {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+
+
+{% endblock %}
+

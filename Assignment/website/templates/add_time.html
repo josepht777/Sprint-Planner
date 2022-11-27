@@ -1,0 +1,56 @@
+{% extends "base.html" %} {% block title %}Add Time{% endblock %}
+{% block content%}
+
+<form method="POST">
+  <div class="row"> <p>
+  </p></div>
+  <label for="type"><strong>Total hours for this task: {{ task.total_time }}</strong></label>
+    <div class="form-group">
+      <label for="type">Add amount of work hours</label>
+      <input type="number" class="form-control" min="0.5" step="0.5"id="time" name= "time" required="required">
+     
+    </div>
+    <div class="form-group">
+      <label for="type">Select Date</label>
+      <input
+        required = "true"
+        type="date"
+        class="form-control"
+        id="date"
+        name="date"
+        placeholder="Enter the start date"
+      />
+    </div>
+    <div class="form-group">
+      <label for="assignee">Select Assignee</label>
+      <select class="form-control" name = assignee id="assignee">
+        {% if users %}
+        {% for user in users %}
+        <option value = "{{ user.firstName }} {{ user.lastName }}">{{ user.firstName }} {{ user.lastName }}</option>
+        {% endfor %}
+        {% else %}
+        <option value = "No users available">No users available</option>
+        {% endif %}
+      </select>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{% endblock %}

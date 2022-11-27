@@ -1,0 +1,234 @@
+{% extends "base.html" %} {% block title %}Sprints{% endblock %}
+
+{% block content%}
+<br>
+<a href = "create-sprint" type="button" class="btn btn-secondary btn-lg btn-block">Create a new Sprint</a>
+<br>
+<h4>Not Started</h4>
+<br>
+<div class="container">
+    <div class="row">
+      <div class="col-12">
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th scope="col" style="text-align:center">Sprint ID</th>
+              <th scope="col" style="text-align:center">Sprint Name</th>
+              <th scope="col" style="text-align:center">Start Date</th>
+              <th scope="col" style="text-align:center">End Date</th>
+              <th scope="col" style="text-align:center">Number of Tasks</th>
+              <th scope="col" style="text-align:center">Options</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for sprint in sprints %}
+            {% if 'created' == sprint.status %}
+            <tr>
+                <th scope="row" style="text-align:center">{{ sprint.id }}</th>
+                <td style="text-align:center"> {{ sprint.name }} </td>
+                <td style="text-align:center">{{ sprint.start_date }}</td>
+                <td style="text-align:center">{{ sprint.end_date }}</td>
+                <td style="text-align:center">{{ sprint.tasks|length }}</td>
+                <td style="text-align:center">
+                  <button type="button" class="btn btn-primary"  data-toggle="modal" data-target="#myModal{{sprint.id}}">Details</button>
+                  <a type="button" href = 'add_tasks/{{ sprint.id }}' class="btn btn-outline-success">Select Tasks</a>
+                  <a type="button" href = '/start_sprint/{{ sprint.id }}' class="btn btn-success" >Start Sprint</a>
+                  
+                </td>
+              </tr>
+              <div class="modal fade" id="myModal{{sprint.id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLongTitle">{{sprint.name}}</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                        {%if sprint.tasks%}
+                        {% for task in sprint.tasks %}
+                          <strong>Task Name: </strong>{{ task.name }}<br>
+                          <strong>Task Tag: </strong>{{ task.tag }}<br>
+                          <strong>Task Priority: </strong>{{ task.priority }}<br>
+                          {% if users %}
+                          {% for user in users %}
+                          {% if user.id == task.assignee %}
+                          <strong>Task Assignee: </strong>{{ user.firstName}} {{ user.lastName}}<br>
+                          {% endif %}
+                          {% endfor %}
+                          {% endif %}
+                          -----------------------------------<br>
+                          <!-- somewhere have a text entry to input time spent and that will call a function in python that will add it to the task. -->
+                        {% endfor %}
+                        {%else%}
+                        <strong>No tasks selected </strong>
+                        {%endif%}
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+            {% endif %}
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <br>
+
+<h4>In Progress</h4>
+<br>
+
+<div class="container">
+    <div class="row">
+      <div class="col-12">
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th scope="col" style="text-align:center">Sprint ID</th>
+              <th scope="col" style="text-align:center">Sprint Name</th>
+              <th scope="col" style="text-align:center">Start Date</th>
+              <th scope="col" style="text-align:center">End Date</th>
+              <th scope="col" style="text-align:center">Number of Tasks</th>
+              <th scope="col" style="text-align:center">Options</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for sprint in sprints %}
+            {% if 'current' == sprint.status %}
+            <tr>
+                <th scope="row" style="text-align:center">{{ sprint.id }}</th>
+                <td style="text-align:center"> {{ sprint.name }} </td>
+                <td style="text-align:center">{{ sprint.start_date }}</td>
+                <td style="text-align:center">{{ sprint.end_date }}</td>
+                <td style="text-align:center">{{ sprint.tasks|length }}</td>
+                <td style="text-align:center">
+                  <button type="button" class="btn btn-dark" style="color:white"  data-toggle="modal" data-target="#myModal{{sprint.id}}">Log time</button>
+                  <a  href = 'view_sprint_board/{{sprint.id}}' type="button" class="btn btn-secondary" style="color:white" >Open Sprint Board</a>
+                  <a  href = 'view_burndown_chart/{{sprint.id}}' type="button" class="btn btn-info" style="color:white" >Burndown Chart</a>
+                  <!-- <a href = "create-sprint" type="button" class="btn btn-secondary btn-lg btn-block">Create a new Sprint</a> -->
+                </td>
+              </tr>
+              <div class="modal fade" id="myModal{{sprint.id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLongTitle">{{sprint.name}}</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                        {% for task in sprint.tasks %}
+                          <strong>Task Name: </strong>{{ task.name }}<br>
+                          <strong>Task Tag: </strong>{{ task.tag }}<br>
+                          <strong>Task Priority: </strong>{{ task.priority }}<br>
+                          
+                
+                      
+                          {% if users %}
+                          {% for user in users %}
+                          {% if user.id == task.assignee %}
+                          <strong>Task Assignee: </strong>{{ user.firstName}} {{ user.lastName}}<br>
+                          {% endif %}
+                          {% endfor %}
+                          {% endif %}
+                        
+                          <strong>Total Time spent: </strong>{{ task.total_time }}<br><br>
+                          <a href = 'add_time/{{sprint.id}}/{{task.id}}' type="button" class="btn btn-primary">Log Time</a><br><br>
+                          -----------------------------------<br>
+                          <!-- somewhere have a text entry to input time spent and that will call a function in python that will add it to the task. -->
+                        {% endfor %}
+                    </div>
+                    <!-- <div class="modal-footer">
+                      
+                    </div> -->
+                  </div>
+                </div>
+              </div>
+            {% endif %}
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+
+
+  <br>
+<h4>Completed</h4>
+<br>
+
+
+<div class="container">
+    <div class="row">
+      <div class="col-12">
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th scope="col" style="text-align:center">Sprint ID</th>
+              <th scope="col" style="text-align:center">Sprint Name</th>
+              <th scope="col" style="text-align:center">Start Date</th>
+              <th scope="col" style="text-align:center">End Date</th>
+              <th scope="col" style="text-align:center">Number of Tasks</th>
+              <th scope="col" style="text-align:center">Options</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for sprint in sprints %}
+            {% if 'completed' == sprint.status %}
+            <tr>
+                <th scope="row" style="text-align:center">{{ sprint.id }}</th>
+                <td style="text-align:center"> {{ sprint.name }} </td>
+                <td style="text-align:center">{{ sprint.start_date }}</td>
+                <td style="text-align:center">{{ sprint.end_date }}</td>
+                <td style="text-align:center">{{ sprint.tasks|length }}</td>
+                <td style="text-align:center">
+                  <button type="button" class="btn btn-primary" style="color:white"  data-toggle="modal" data-target="#myModal{{sprint.id}}">Details</button>
+                  <a  href = 'view_burndown_chart/{{sprint.id}}' type="button" class="btn btn-info" style="color:white" >Burndown Chart</a>
+                </td>
+              </tr>
+              <div class="modal fade" id="myModal{{sprint.id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLongTitle">{{sprint.name}}</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                        {% for task in sprint.tasks %}
+                          <strong>Task Storypoint: </strong>{{ task.storyPoint }}<br>
+                          <strong>Task Tag: </strong>{{ task.tag }}<br>
+                          <strong>Task Priority: </strong>{{ task.priority }}<br>
+                          {% if users %}
+                          {% for user in users %}
+                          {% if user.id == task.assignee %}
+                          <strong>Task Assignee: </strong>{{ user.firstName}} {{ user.lastName}}<br>
+                          {% endif %}
+                          {% endfor %}
+                          {% endif %}
+                          -----------------------------------<br>
+                          <!-- somewhere have a text entry to input time spent and that will call a function in python that will add it to the task. -->
+                        {% endfor %}
+                    </div>
+                    <div class="modal-footer">
+                      <a href = '#' type="button" class="btn btn-primary">Edit Task</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            {% endif %}
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+
+{% endblock %}

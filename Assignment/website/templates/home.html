@@ -1,0 +1,76 @@
+{% extends "base.html" %} 
+
+{% block title %}Home
+{% endblock %}
+
+{% block content%}
+<p>
+</p>
+<h1>Welcome!</h1>
+
+<h4>
+    The purpose of this program is to help manager your project!
+</h4>
+<h4>
+    Assuming your following the agile methodology.
+</h4>
+<p>-------------------------------------------------------------------------------</p>
+<h6>
+    First of all, users will need to be created in order to create tasks.
+</h6>
+<h6>
+    The users page will be where users are created and deleted. 
+</h6>
+<h6>
+    Additionly, once a sprint starts a burndown chart displaying individual contributions will appear on this page.  
+</h6>
+<h6>
+    Please use the button below to navigater to the users page:
+</h6>
+<div>
+    <a class="btn btn-primary btn-lg" href="/users" role="Users">Users</a>
+</div>
+<p>
+</p>
+<h6>
+    Secondly, tasks will need to be created in order to start a sprint.
+</h6>
+<h6>
+    The tasks page will be where tasks are created, edited and deleted. 
+</h6>
+<h6>
+    Please use the button below to navigater to the tasks page:
+</h6>
+<p></p>
+<div>
+    <a class="btn btn-success btn-lg" href="/tasks" role="Users">View Tasks</a>
+</div>
+<p></p>
+<h6>
+    Lastly, the sprints page will be where to create and manage sprints.
+</h6>
+<h6>
+    Once a sprint' been created, tasks must be selected in order to start the sprint.
+</h6>
+<h6>
+    Note: One sprint can only be started/'in progress' at a time.
+</h6>
+<h6>
+    For "In Progress" sprints, log time option can be used to record time and Sprint Board can be used to progress tasks.
+</h6>
+<h6>
+    The program will automatically move the sprint into "Completed" once all the tasks have been completed.
+</h6>
+<h6>
+    Moreover, a option will be avaible to view the burndown chart of a sprint.
+</h6>
+<p>
+</p>
+<div>
+    <a class="btn btn-info btn-lg" href="/sprints" role="Users">View Sprints</a>
+</div>
+<p></p>
+<h6>
+    The navition bar can also be used to navigate to these pages 
+</h6>
+{% endblock %}
